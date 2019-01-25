@@ -1,0 +1,68 @@
+---
+title: "IMPORTAR DATOS"
+author: "Camilo Pérez"
+date: "24 de enero de 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# LEER ARCHIVOS ASCII
+## TIPO 1: solo datos
+```{r }
+# tusDatos <- read.table(file.choose(), skip = 0, header = FALSE, sep =',') escoger manualmente el archivo con file.choose
+
+
+tusDatos <- read.table("D:/CURSOS/Edx_R/HOME/PROJECTS/PROJECT_3/data/ejemplo-datos.txt", skip = 0, header = FALSE, sep =',')
+View(tusDatos)
+
+
+```
+# TIPO 2: encabezado una linea + datos
+```{r}
+
+
+tusDatos <- read.table("D:/CURSOS/Edx_R/HOME/PROJECTS/PROJECT_3/data/ejemplo-datos-header.txt", skip = 0, header = TRUE, sep =',')
+
+View(tusDatos)
+
+```
+# TIPO 3: encabezado raro + datos
+```{r}
+tusDatos <- read.table("D:/CURSOS/Edx_R/HOME/PROJECTS/PROJECT_3/data/ejemplo-datos-header-skip.txt", skip = 8, header = TRUE, sep =',')
+View(tusDatos)
+
+
+```
+# LEER ARCHIVOS EXCEL
+```{r}
+
+library("readxl")
+
+# Puedes leer la hoja poniendo el nombre
+#misDatos <- read_xlsx(file.choose(), sheet = "Hoja1")
+
+# Puedes leer la hoja n?mero 1. La primera de todas
+misDatos <- read_xlsx("D:/CURSOS/Edx_R/HOME/PROJECTS/PROJECT_3/data/datos.xlsx", sheet = 1)
+View(misDatos)
+
+
+
+# DESDE INTERNET
+El_nino <- read.csv("ftp://ftp.cpc.ncep.noaa.gov/wd53du/sstcon34t.txt")
+El_nino
+
+# el archivo el nino es de tipo TIPO 3: encabezado raro + datos
+#quitamos las dos primeras lineas con skip
+El_nino <- read.csv("ftp://ftp.cpc.ncep.noaa.gov/wd53du/sstcon34t.txt", skip = 2, sep = "")
+El_nino
+
+names(El_nino)<- c("trim","BELOW","NORMAL","ABOVE","BELOW","NORMAL","ABOVE","DEGC","anomaly" )
+El_nino
+a<- 1:length(El_nino$anomaly)
+a
+plot(a, El_nino$anomaly, type = "b")
+```
+
